@@ -1,0 +1,26 @@
+{
+    "scripts": {
+    "start": "node server.js"
+  },
+  "name": "employee-tracker",
+  "description": "Command-line app that allows the user to manage an employee database",
+  "version": "1.0.0",
+  "main": "server.js",
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/a-ens/employee-tracker.git"
+  },
+  "author": "a-ens",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/a-ens/employee-tracker/issues"
+  },
+  "homepage": "https://github.com/a-ens/employee-tracker#readme",
+    "dependencies": {
+    "console.table": "^0.10.0",
+    "dotenv": "^16.0.3",
+    "inquirer": "^9.1.4",
+    "mysql2": "^2.3.3"
+  }
+}
