@@ -27,10 +27,52 @@ afterConnection = () => {
 const promptUser = () => {
     inquirer.prompt([
     {   type: 'list',
-        name: 'options',
+        name: 'main-options',
         message: 'Which option would you like?',
-        choices: ['view all departments', 'view all roles', 'view all employees', 'add a department', 'add a role', 'add an employee', 'update an employee role'
+        choices: ['View all departments', 'View all roles', 'View all employees', 'Add a department', 'Add a role', 'Add an employee', 'Update an employee role', 'No action'
         ]
     }])
-    
-}
+    .then((answers) => {
+        const { choices } = answers; 
+  
+        if (choices === "View all departments") {
+          viewDepartments();
+        }
+  
+        if (choices === "View all roles") {
+          viewRoles();
+        }
+  
+        if (choices === "View all employees") {
+          viewEmployees();
+        }
+  
+        if (choices === "Add a department") {
+          addDepartment();
+        }
+  
+        if (choices === "Add a role") {
+          addRole();
+        }
+  
+        if (choices === "Add an employee") {
+          addEmployee();
+        }
+  
+        if (choices === "Update an employee role") {
+          updateEmployeeRole();
+        }
+  
+        if (choices === "Do nothing") {
+          connection.end()
+      };
+    });
+};
+
+viewDepartments();
+viewRoles();
+viewEmployees();
+addDepartment();
+addRole();
+addEmployee();
+updateEmployeeRole();
