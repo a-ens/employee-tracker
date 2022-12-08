@@ -69,10 +69,34 @@ const promptUser = () => {
     });
 };
 
-viewDepartments();
-viewRoles();
-viewEmployees();
-addDepartment();
-addRole();
-addEmployee();
-updateEmployeeRole();
+viewDepartments = () =>{
+    console.log('All departments:');
+
+    const sql = `SELECT role.id, role.title, department.name AS department
+    FROM role
+    INNER JOIN department ON role.department_id = department.id`;
+
+    connection.promise().query(sql, (err, rows) => {
+        if (err) throw err; 
+        console.table(rows); 
+        promptUser();
+    })
+};
+viewRoles = () =>{
+    
+};
+viewEmployees = () =>{
+    
+};
+addDepartment = () =>{
+    
+};
+addRole = () =>{
+    
+};
+addEmployee = () =>{
+    
+};
+updateEmployeeRole = () =>{
+    
+};
