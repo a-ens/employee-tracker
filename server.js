@@ -16,6 +16,21 @@ connection.connect(err => {
     if (err) throw err;
     console.log('connected as id ' + connection.threadId);
   afterConnection();
+});
 
+afterConnection = () => {
+    console.log('Welcome, Employee Manager!')
 
-})
+    promptUser();
+};
+
+const promptUser = () => {
+    inquirer.prompt([
+    {   type: 'list',
+        name: 'options',
+        message: 'Which option would you like?',
+        choices: ['view all departments', 'view all roles', 'view all employees', 'add a department', 'add a role', 'add an employee', 'update an employee role'
+        ]
+    }])
+    
+}
