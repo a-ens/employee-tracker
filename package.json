@@ -1,23 +1,25 @@
 {
-    "scripts": {
+
+  "name": "employee-tracker",
+  "version": "1.0.0",
+  "description": "Command-line app that allows the user to manage an employee database",
+  "main": "server.js",
+  "scripts": {
+    "test":"jest",
     "start": "node server.js"
   },
-  "name": "employee-tracker",
-  "description": "Command-line app that allows the user to manage an employee database",
-  "version": "1.0.0",
-  "main": "server.js",
-  "devDependencies": {},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/a-ens/employee-tracker.git"
   },
+  "keywords": [],
   "author": "a-ens",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/a-ens/employee-tracker/issues"
   },
   "homepage": "https://github.com/a-ens/employee-tracker#readme",
-    "dependencies": {
+  "dependencies": {
     "console.table": "^0.10.0",
     "dotenv": "^8.2.0",
     "inquirer": "^7.1.0",
