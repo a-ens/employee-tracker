@@ -200,7 +200,7 @@ addRole = () => {
                         params.push(department);
 
                         const sql = `INSERT INTO role (title, salary, department_id)
-                          VALUES (?, ?, ?)`;
+                        VALUES (?, ?, ?)`;
 
                         connection.query(sql, params, (err, result) => {
                             if (err) throw err;
@@ -223,7 +223,7 @@ addEmployee = () => {
                 if (addFirst) {
                     return true;
                 } else {
-                    console.log('Please enter a first name');
+                    console.log('Please enter a valid first name');
                     return false;
                 }
             }
@@ -236,7 +236,7 @@ addEmployee = () => {
                 if (addLast) {
                     return true;
                 } else {
-                    console.log('Please enter a last name');
+                    console.log('Please enter a valid last name');
                     return false;
                 }
             }
@@ -278,7 +278,7 @@ addEmployee = () => {
                         {
                             type: 'list',
                             name: 'manager',
-                            message: "Who is the employee's manager?",
+                            message: "Who is this employee's manager?",
                             choices: managers
                         }
                     ])
