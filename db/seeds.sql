@@ -4,12 +4,14 @@ VALUES
 ('Advertising'),
 ('Cleaning');
 
+
 INSERT INTO role (title, salary, department_id)
 VALUES
 ('Cashier', 22, 1),
 ('Janitor', 20, 3),
 ('Burger-Flipper', 15, 1),
 ('Sign-Twirler', 11, 2);
+
 
 INSERT INTO employee (first_name, last_name, role_id, manager_id)
 VALUES 

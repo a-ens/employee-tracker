@@ -28,9 +28,16 @@ const promptUser = () => {
     inquirer.prompt([
         {
             type: 'list',
-            name: 'main-options',
+            name: 'choices',
             message: 'Which option would you like?',
-            choices: ['View all departments', 'View all roles', 'View all employees', 'Add a department', 'Add a role', 'Add an employee', 'Update an employee role', 'Do nothing'
+            choices: ['View all departments',
+                    'View all roles',
+                    'View all employees',
+                    'Add a department',
+                    'Add a role',
+                    'Add an employee',
+                    'Update an employee role',
+                    'Do nothing'
             ]
         }])
         .then((answers) => {
@@ -73,9 +80,7 @@ const promptUser = () => {
 viewDepartments = () => {
     console.log('All departments:\n');
 
-    const sql = `SELECT role.id, role.title, department.name AS department
-    FROM role
-    INNER JOIN department ON role.department_id = department.id`;
+    const sql = `SELECT department.id AS id, department.name AS department FROM department`;
 
     connection.promise().query(sql, (err, rows) => {
         if (err) throw err;
@@ -91,7 +96,7 @@ viewRoles = () => {
                  FROM role
                  INNER JOIN department ON role.department_id = department.id`;
 
-    connection.promise().query(mysql, (err, rows) => {
+    connection.promise().query(sql, (err, rows) => {
         if (err) throw err;
         console.table(rows);
         promptUser();
@@ -149,69 +154,69 @@ addDepartment = () => {
 
 addRole = () => {
     inquirer.prompt([
-        {
-            type: 'input',
-            name: 'addRole',
-            message: "What do you want to call the new role?",
-            validate: addRole => {
-                if (addRole) {
-                    return true;
-                } else {
-                    console.log('Please input a valid role name');
-                    return false;
-                }
-            }
-        },
-        {
-            type: 'input',
-            name: 'salary',
-            message: "What is the hourly salary for this role?",
-            validate: addSalary => {
-                if (isNAN(addSalary)) {
-                    return true;
-                } else {
-                    console.log('Please enter a valid salary amount');
-                    return false;
-                }
-            }
+      {
+        type: 'input', 
+        name: 'role',
+        message: "What do you want to call the new role?",
+        validate: addRole => {
+          if (addRole) {
+              return true;
+          } else {
+              console.log('Please input a valid role name');
+              return false;
+          }
         }
+      },
+      {
+        type: 'input', 
+        name: 'salary',
+        message: "What is the hourly salary for this role?",
+        validate: addSalary => {
+          if (!isNaN(addSalary)) {
+              return true;
+          } else {
+              console.log('Please enter a valid salary amount');
+              return false;
+          }
+        }
+      }
     ])
-        .then(answer => {
-            const params = [answer.role, answer.salary];
+      .then(answer => {
+        const params = [answer.role, answer.salary];
 
-            // grab dept from department table
-            const roleSql = `SELECT name, id FROM department`;
-
-            connection.promise().query(roleSql, (err, data) => {
+        // grab dept from department table
+        const roleSql = `SELECT name, id FROM department`; 
+  
+        connection.promise().query(roleSql, (err, data) => {
+          if (err) throw err; 
+      
+          const dept = data.map(({ name, id }) => ({ name: name, value: id }));
+  
+          inquirer.prompt([
+          {
+            type: 'list', 
+            name: 'dept',
+            message: "What department is this role in?",
+            choices: dept
+          }
+          ])
+            .then(deptChoice => {
+              const dept = deptChoice.dept;
+              params.push(dept);
+  
+              const sql = `INSERT INTO role (title, salary, department_id)
+                          VALUES (?, ?, ?)`;
+  
+              connection.query(sql, params, (err, result) => {
                 if (err) throw err;
-
-                const department = data.map(({ name, id }) => ({ name: name, value: id }));
-
-                inquirer.prompt([
-                    {
-                        type: 'list',
-                        name: 'roleDept',
-                        message: "What department is this role in?",
-                        choices: department
-                    }
-                ])
-                    .then(deptChoice => {
-                        const dept = deptChoice.department;
-                        params.push(department);
-
-                        const sql = `INSERT INTO role (title, salary, department_id)
-                        VALUES (?, ?, ?)`;
-
-                        connection.query(sql, params, (err, result) => {
-                            if (err) throw err;
-                            console.log('Added ' + answer.role + " as a new role");
-
-                            viewRoles();
-                        });
-                    });
-            });
-        });
-};
+                console.log('Added' + answer.role + " as a new role"); 
+  
+                viewRoles();
+         });
+       });
+     });
+   });
+  };
 
 addEmployee = () => {
     inquirer.prompt([
