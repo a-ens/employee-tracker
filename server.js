@@ -5,7 +5,7 @@ const cTable = require('console.table');
 
 require('dotenv').config()
 
-const connection = mysql.startConnect({
+const connection = mysql.createConnection({
     host: 'localhost',
     user: 'root',
     password: process.env.DB_PASSWORD,
@@ -30,7 +30,7 @@ const promptUser = () => {
             type: 'list',
             name: 'main-options',
             message: 'Which option would you like?',
-            choices: ['View all departments', 'View all roles', 'View all employees', 'Add a department', 'Add a role', 'Add an employee', 'Update an employee role', 'No action'
+            choices: ['View all departments', 'View all roles', 'View all employees', 'Add a department', 'Add a role', 'Add an employee', 'Update an employee role', 'Do nothing'
             ]
         }])
         .then((answers) => {
@@ -71,7 +71,7 @@ const promptUser = () => {
 };
 
 viewDepartments = () => {
-    console.log('All departments:');
+    console.log('All departments:\n');
 
     const sql = `SELECT role.id, role.title, department.name AS department
     FROM role
@@ -85,7 +85,7 @@ viewDepartments = () => {
 };
 
 viewRoles = () => {
-    console.log('All roles:');
+    console.log('All roles:\n');
 
     const sql = `SELECT role.id, role.title, department.name AS department
                  FROM role
@@ -99,7 +99,7 @@ viewRoles = () => {
 };
 
 viewEmployees = () => {
-    console.log('All employees:');
+    console.log('All employees:\n');
     const sql = `SELECT employee.id, 
                         employee.first_name, 
                         employee.last_name, 
